@@ -1,0 +1,103 @@
+﻿@model _1102137146.Models.OrderSearchCondition
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>Index</title>
+</head>
+<body>
+    @using (Html.BeginForm("Index", "UI", FormMethod.Post, new { id = "Form1" }))
+    {
+        <div>
+            <form>
+                <div style="font-size:30;font-weight: 900;">
+                    訂單查詢
+                </div>
+                <table border>
+                    <tr>
+                        <th>訂單編號</th>
+                        <td colspan="3">@Html.TextBoxFor(model => model.OrderID)</td>
+                    </tr>
+                    <tr>
+                        <th>客戶名稱</th>
+                        <td colspan="3">@Html.TextBoxFor(model => model.CompanyName)</td>
+                    </tr>
+                    <tr>
+                        <th>負責員工</th>
+                        <td colspan="3">
+                            @Html.DropDownListFor(model => model.EmployeeID, (List<SelectListItem>)ViewBag.EmpData)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>出貨公司</th>
+                        <td colspan="3">
+                            @Html.DropDownListFor(model => model.ShipperID, (List<SelectListItem>)ViewBag.ShipperData)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>訂購日期</th>
+                        <td>
+                            @Html.TextBoxFor(model => model.OrderDate, new { @type = "date" })
+                        </td>
+                        <th>出貨日期</th>
+                        <td>
+                            @Html.TextBoxFor(model => model.ShippedDate, new { @type = "date" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>需要日期</th>
+                        <td colspan="3">
+                            @Html.TextBoxFor(model => model.RequiredDate, new { @type = "date" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td colspan="3">
+                            <input type="submit" value="查詢" />
+                            <input type="reset" value="清除" />
+                            <input type="submit" value="新增訂單" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div>
+
+
+            @if (ViewBag.Order != null)
+            {
+                <h1>查詢結果</h1>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td>訂單編號</td>
+                        <td>客戶名稱</td>
+                        <td>訂購日期</td>
+                        <td>發貨日期</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    @foreach (var item in ViewBag.Order)
+                    {
+                        <tr id='@item.OrderID'>
+                            <td>@item.OrderID</td>
+                            <td>@item.CompanyName</td>
+                            <td>@item.OrderDate</td>
+                            <td>@item.ShippedDate</td>
+                            <td>修改</td>
+                            <td>刪除</td>
+                        </tr>
+                    }
+
+                </table>
+            }
+        </div>
+    }
+</body>
+</html>
